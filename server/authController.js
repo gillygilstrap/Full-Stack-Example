@@ -6,6 +6,7 @@ module.exports = {
         res.status(200).json({message: 'Successfully logged out'})
     },
     handleCallback: (req, res) => {
+        console.log('this got hit')
         exchangeCodeForAccessToken()
         .then(exchangeAccessTokenForUserInfo)
         .then(storeUserInfoInDatabase)
@@ -16,13 +17,13 @@ module.exports = {
 
         function exchangeCodeForAccessToken() {
             const payload = {
-                client_id: process.env.REACT_APP_AUTH0_CLINET_ID,
+                client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
                 client_secret: process.env.AUTH0_CLIENT_SECRET,
-                code: req.qury.code,
+                code: req.query.code,
                 grant_type: 'authorization_code',
                 redirect_uri: `http://${req.headers.host}/callback`
             };
-            console.log('payload', payload)
+            // console.log('payload', payload)
             return axios.post(`https://${process.env.REACT_APP_AUTH0_DOMAIN}/oauth/token`, payload)
         }
 
@@ -30,13 +31,13 @@ module.exports = {
             const accessToken = accessTokenResponse.data.access_token;
             console.log('accessToken', accessToken)
             const url = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/userinfo?access_token=${accessToken}`
-            console.log('userinfo url', url)
+            // console.log('userinfo url', url)
             return axios.get(url);
         }
 
         function storeUserInfoInDatabase(userInfoResponse) {
             const userData = userInfoResponse.data;
-            console.log('userData', userData)
+            // console.log('userData', userData)
 
             return req.app.get('db').get_user({auth0Id: userData.sub}).then( users => {
                 if (users.length) {
@@ -50,7 +51,7 @@ module.exports = {
                         name: userData.name,
                         picture: userData.picture
                     }).then(newUsers => {
-                        const newUser = newUser[0]
+                        const newUser = newUsers[0]
                         req.session.user = newUser;
                         res.redirect('/cool-couches');
                     }).catch(error => {
