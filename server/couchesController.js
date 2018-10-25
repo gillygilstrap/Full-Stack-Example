@@ -1,5 +1,5 @@
 module.exports = {
-    getCouches: (req.res) => {
+    getCouches: (req,res) => {
         req.app.get(db).get_couches().then(couches => {
             res.json(couches)
         }).catch (error => {
@@ -11,7 +11,7 @@ module.exports = {
     postCouch: (req,res) => {
         
         req.app.get(db).create_couch({
-            user_id: req.session.user.id
+            user_id: req.session.user.id,
             name: req.body.name,
             price: req.body.price,
             image: req.body.image
