@@ -1,0 +1,35 @@
+
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+
+
+
+.navbar {
+    display: flex;
+    height: 100px;
+    width: 100%;
+    background: rgb(45, 10, 245);
+    color: white;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Lobster', cursive;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.322);
+}
+
+.navbar .logo {
+margin-right: 400px;
+font-size: 400%;
+color: yellow;
+}
+
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 50px;
+    font-size: 150%;
+    transition: 0.3s;
+}
+.navbar a:hover {
+    text-shadow: 2px 2px 6px yellow;
+    color: black;
+}

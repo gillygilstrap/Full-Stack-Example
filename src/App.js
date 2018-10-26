@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
+import routes from './routes';
+import NavBar from './components/Navbar/Navbar';
 
 class App extends Component {
 
@@ -20,7 +22,8 @@ class App extends Component {
 
     return (
       <div className="app">
-       <button onClick={this.login}>Login</button>
+      <NavBar />
+       {routes}
       </div>
     );
   }
